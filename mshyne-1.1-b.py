@@ -2,7 +2,7 @@ import sys
 
 # Get our working variables.
 summary_type = str(sys.argv[1])
-number_of_days = float(sys.argv[2])
+number_of_days = int(sys.argv[2])
 stock_data_raw = open(sys.argv[3])
 
 
@@ -12,10 +12,10 @@ def validateSummary():
 	else:
 		return False
 
-def makeDataDict():
+def makeDataDict(user_input):
 	parsed_data = []
 
-	for stock in stock_data_raw:
+	for stock in stock_data_raw[1:user_input]:
 		data_line = stock.split(',')
 		parsed_data.append(data_line)
 
@@ -51,13 +51,16 @@ def makeDataDict():
 
 
 def getMax(data_list):
-	bottom = 0
+#	bottom = 0
+#	desired_data = []
+#	while bottom < number_of_days:
+#		integer_bottom = int(bottom)
+#		print data_list[integer_bottom]["Close"]
+#		desired_data.append(data_list[integer_bottom]["Close"])
+#		bottom = bottom + 1
 	desired_data = []
-	while bottom < number_of_days:
-		integer_bottom = int(bottom)
-		print data_list[integer_bottom]["Close"]
-		desired_data.append(data_list[integer_bottom]["Close"])
-		bottom = bottom + 1
+	for data in data_list:
+		desired_data.append(data["Close"])
 	print max(desired_data)
 	
 def getMin(data_list):
@@ -129,7 +132,8 @@ if number_of_days > 251:
 elif validateSummary() == False:
 	print "type " + summary_type + " not found \n Usage: ./stock_price_summary.py [summary type] [# days] [ticker]"
 else:
-	masterDataList = makeDataDict()
+	print number_of_days
+	masterDataList = makeDataDict(number_of_days)
 	if summary_type == "max":
 		getMax(masterDataList)
 	if summary_type == "min":
