@@ -1,9 +1,11 @@
-import sys
+import sys, os
 
 # Get our working variables.
 summary_type = str(sys.argv[1])
 number_of_days = int(sys.argv[2])
 stock_data_raw = open(sys.argv[3])
+
+keys = stock_data_raw.readlines()[0].split(',')
 
 
 def validateSummary():
@@ -12,56 +14,13 @@ def validateSummary():
 	else:
 		return False
 
-def makeDataDict(user_input):
+
+def getMax(user_input):
 	parsed_data = []
-
-	for stock in stock_data_raw[1:user_input]:
-		data_line = stock.split(',')
-		parsed_data.append(data_line)
-
-	data_list = []
-
-	header1 = parsed_data[0][0]
-	header2 = parsed_data[0][1]
-	header3 = parsed_data[0][2]
-	header4 = parsed_data[0][3]
-	header5 = parsed_data[0][4]
-	header6 = parsed_data[0][5]
-
-	parsed_data.pop(0)
-
-	for line in parsed_data:
-		dictionary_line = {}
-		for data in line:
-			if line.index(data) == 0:
-				dictionary_line.update({header1:data})
-			if line.index(data) == 1:
-				dictionary_line.update({header2:data})
-			if line.index(data) == 2:
-				dictionary_line.update({header3:data})
-			if line.index(data) == 3:
-				dictionary_line.update({header4:data})
-			if line.index(data) == 4:
-				dictionary_line.update({header5:data})
-			if line.index(data) == 5:
-				dictionary_line.update({header6:data})
-		data_list.append(dictionary_line)
-	
-	return data_list
-
-
-def getMax(data_list):
-#	bottom = 0
-#	desired_data = []
-#	while bottom < number_of_days:
-#		integer_bottom = int(bottom)
-#		print data_list[integer_bottom]["Close"]
-#		desired_data.append(data_list[integer_bottom]["Close"])
-#		bottom = bottom + 1
-	desired_data = []
-	for data in data_list:
-		desired_data.append(data["Close"])
-	print max(desired_data)
+	for stock in stock_data_raw.readlines()[1:user_input]:
+		print "WHY"
+		parsed_data.append((stock.split(',')[2]))
+	#print max(parsed_data)
 	
 def getMin(data_list):
 	bottom = 0
@@ -133,9 +92,9 @@ elif validateSummary() == False:
 	print "type " + summary_type + " not found \n Usage: ./stock_price_summary.py [summary type] [# days] [ticker]"
 else:
 	print number_of_days
-	masterDataList = makeDataDict(number_of_days)
+	#masterDataList = makeDataDict(number_of_days)
 	if summary_type == "max":
-		getMax(masterDataList)
+		getMax(number_of_days)
 	if summary_type == "min":
 		getMin(masterDataList)
 	if summary_type == "average":
