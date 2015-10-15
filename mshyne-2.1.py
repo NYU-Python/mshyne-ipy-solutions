@@ -18,8 +18,33 @@ for argument in args:
 	value = argument.split('=',1)[1]
 	argdict[key] = value
 
-if len(required_args.intersection(argdict)) == 2 and len(valid_args.intersection(argdict)) == 4:
-	print "keep going"
+if len(required_args.intersection(argdict)) == 2:
+	if len(valid_args.intersection(argdict)) == 4:
+	#print "keep going"
+		header_template = """From: {}
+To: {}
+Subject: {}
+Body: {}""".format(argdict['from'], argdict['to'], argdict['subject'], argdict['body'])
+		print header_template
+	if len(valid_args.intersection(argdict)) == 3:
+		if 'subject' in valid_args.intersection(argdict):
+			header_template = """From: {}
+To: {}
+Subject: {}
+Body:""".format(argdict['from'], argdict['to'], argdict['subject'])
+			print header_template
+		else:
+			header_template = """From: {}
+To: {}
+Subject: 
+Body: {}""".format(argdict['from'], argdict['to'], argdict['body'])
+			print header_template
+	else:
+		header_template = """From: {}
+To: {}
+Subject:
+Body:""".format(argdict['from'], argdict['to'])
+		print header_template
 else:
 	if len(required_args.difference(argdict)) > 0:
 		missing_arguments = ''
