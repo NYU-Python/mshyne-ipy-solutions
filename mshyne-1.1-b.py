@@ -8,7 +8,7 @@ stock_data_raw = open(sys.argv[3])
 keys = stock_data_raw.readlines()[0].split(',')
 
 
-def validateSummary():
+def validate_summary():
 	if (summary_type == "max") or (summary_type == "min") or (summary_type == "average") or (summary_type == "centered") or (summary_type == "median"):
 		return True
 	else:
@@ -88,7 +88,7 @@ def getCentered(data_list):
 # Validate. Return errors if bad, process data if good.
 if number_of_days > 251:
 	print "Error: " + number_of_days + " is more than available in data source. \n Usage: ./stock_price_summary.py [summary type] [# of days] [ticker]"
-elif validateSummary() == False:
+elif not validate_summary:
 	print "type " + summary_type + " not found \n Usage: ./stock_price_summary.py [summary type] [# days] [ticker]"
 else:
 	print number_of_days
