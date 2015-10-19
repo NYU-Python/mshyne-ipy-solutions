@@ -21,27 +21,17 @@ def process_directory(directory):
 	return big_ole_dict
 
 # Get sorted modified time from dictionary made in process_dictionary.
-def get_mtime(processed_directory):
+def get_mtime_or_size(processed_directory, sort_criteria):
 	data_desired = []
 	for file in processed_directory:
-		data_desired.append((processed_directory[file]['name'],int(processed_directory[file]['mtime'])))
+		data_desired.append((processed_directory[file]['name'],int(processed_directory[file][sort_criteria])))
 	if sort_direction == 'ascending':
 		return sorted(data_desired, key=lambda tup: tup[1])
 	else:
 		return sorted(data_desired, key=lambda tup: tup[1], reverse=True)
 
-# Get sorted file size from dictionary made in process_dictionary.		
-def get_file_size(processed_directory):
-	data_desired = []
-	for file in processed_directory:
-		data_desired.append((processed_directory[file]['name'],int(processed_directory[file]['size'])))
-	if sort_direction == 'ascending':
-		return sorted(data_desired, key=lambda tup: tup[1])
-	else:
-		return sorted(data_desired, key=lambda tup: tup[1], reverse=True)	
 
-# Check for correct number of arguments.
-
+# Help message that displays and exits if user inputs -h as an argument.
 if '-h' in sys.argv:
 	print """The following convention should be used to make use of this program:
 	
@@ -56,6 +46,8 @@ optional argument:
 	-h: show this help message and exit
 	"""
 	exit()
+
+# Check for correct number of arguments.	
 if not len(sys.argv) == 5:
 	print "Not enough arguments provided. \n \n Please use the following input criteria: \n $./list_files.py --dir='testdir' --by=mtime --results=4 --direction='descending'"
 	exit()
@@ -93,16 +85,16 @@ except OSError:
 	exit()
 
 
-if sort_criteria == "mtime":
-	data_sorted = get_mtime(processed_directory)
+# Main.
+if sort_criteria == "mtime" or sort_criteria == "size":
+	data_sorted = get_mtime_or_size(processed_directory,sort_criteria)
 	for data in data_sorted:
 		print data[0]
-		print "Last Modified: %s" % time.ctime(data[1])
-if sort_criteria == "size":
-	data_sorted = get_file_size(processed_directory)
-	for data in data_sorted:
-		print data[0]
-		print "Size: %s bytes" % data[1]
+		if sort_criteria == "mtime":
+			print "Last Modified: %s" % time.ctime(data[1])
+		else:
+			print "Size: %s bytes" % data[1]
+
 if sort_criteria == "name":
 	data = []
 	for key in processed_directory:
