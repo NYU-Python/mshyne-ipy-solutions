@@ -1,14 +1,11 @@
-import os
-import sys
+import os, sys
 
 sendmail_prog = '/usr/sbin/sendmail'
 
 required_args = set(['to', 'from'])
 valid_args = set(['to', 'from', 'subject', 'body'])
 
-
 args = sys.argv[1:]
-
 
 argdict = {}
 
@@ -31,8 +28,6 @@ if len(required_args.difference(argdict)) > 0:
 		print "The following required argument is missing: \n" + s.join(required_args.difference(argdict))
 		exit()
 	
-
-
 if len(required_args.intersection(argdict)) == 2:
 	header_template = """From: """ + argdict['from'] + """
 To: """ + argdict['to'] + """
