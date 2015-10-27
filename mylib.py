@@ -8,18 +8,16 @@ class Logger:
 		
 		for list_item in priorities:
 			if list_item == priority:
-				self.priority = priorities.index(list_item) + 1
+				self.priority = priorities.index(list_item)
 				break
 			else:
 				self.priority = 5
 		
-		print self.priority
 		self.datetime = datetime
 		self.scriptname = scriptname
 		
 		self.write_file = open(os.path.dirname(sys.argv[0]) + "/" + filename, "a")
 
-		
 	def debug(self, message):
 		self.write_log(message, 1)
 		
@@ -37,7 +35,7 @@ class Logger:
 	
 	def write_log(self, message, priority):
 		prepend = self.compose_prepend()
-		if priority > (self.priority - 1):
+		if priority > self.priority:
 			self.write_file.write(prepend + message + self.log_line_spacer)
 		
 	def compose_prepend(self):
