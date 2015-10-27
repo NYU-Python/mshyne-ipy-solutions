@@ -34,9 +34,11 @@ class Logger:
 		self.write_log(message, 5)
 	
 	def write_log(self, message, priority):
+		working_file = open(self.write_file.name, 'a')
 		prepend = self.compose_prepend()
 		if priority > self.priority:
 			self.write_file.write(prepend + message + self.log_line_spacer)
+		working_file.close()
 		
 	def compose_prepend(self):
 		if self.datetime:

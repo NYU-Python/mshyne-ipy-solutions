@@ -1,6 +1,6 @@
 from mylib import Logger
 
-mylog = Logger('logfile.txt', priority='CRITICAL',
+mylog = Logger('logfile.txt', priority='DEBUG',
                datetime=False, scriptname=False)
 
 mylog.debug('will log if priority is DEBUG only')
