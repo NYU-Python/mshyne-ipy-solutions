@@ -10,9 +10,6 @@ def process_directory(directory):
 		if os.path.isfile(fullpath):
 			if not file == ".DS_Store":
 				file_names.append(file)
-	#if len(file_names) < result_number:
-	#	print "There are not enough files in this directory to satisfy your desired result number. Please enter a number equal to or less than " + str(len(file_names))
-	#	exit()
 	for file in file_names:
 		fullpath = os.path.join(directory,file)
 		big_ole_dict[file] = { 'name': os.path.basename(fullpath), 'mtime': os.stat(fullpath).st_mtime, 'size': os.stat(fullpath).st_size}
