@@ -9,26 +9,25 @@ def process_directory(directory):
 		fullpath = os.path.join(directory,file)
 		if os.path.isfile(fullpath):
 			if not file == ".DS_Store":
-				if len(file_names) < result_number:
-					file_names.append(file)
-	if len(file_names) < result_number:
-		print "There are not enough files in this directory to satisfy your desired result number. Please enter a number equal to or less than " + str(len(file_names))
-		exit()
-	else:
-		for file in file_names:
-			fullpath = os.path.join(directory,file)
-			big_ole_dict[file] = { 'name': os.path.basename(fullpath), 'mtime': os.stat(fullpath).st_mtime, 'size': os.stat(fullpath).st_size}
+				file_names.append(file)
+	#if len(file_names) < result_number:
+	#	print "There are not enough files in this directory to satisfy your desired result number. Please enter a number equal to or less than " + str(len(file_names))
+	#	exit()
+	for file in file_names:
+		fullpath = os.path.join(directory,file)
+		big_ole_dict[file] = { 'name': os.path.basename(fullpath), 'mtime': os.stat(fullpath).st_mtime, 'size': os.stat(fullpath).st_size}
 	return big_ole_dict
 
 # Get sorted modified time from dictionary made in process_dictionary.
-def get_mtime_or_size(processed_directory, sort_criteria):
+def get_mtime_or_size(processed_directory, sort_criteria, result_number):
 	data_desired = []
 	for file in processed_directory:
 		data_desired.append((processed_directory[file]['name'],int(processed_directory[file][sort_criteria])))
 	if sort_direction == 'ascending':
-		return sorted(data_desired, key=lambda tup: tup[1])
+		sorted_list = sorted(data_desired, key=lambda tup: tup[1])
 	else:
-		return sorted(data_desired, key=lambda tup: tup[1], reverse=True)
+		sorted_list = sorted(data_desired, key=lambda tup: tup[1], reverse=True)
+	return sorted_list[0:result_number]
 
 
 # Help message that displays and exits if user inputs -h as an argument.
@@ -87,7 +86,7 @@ except OSError:
 
 # Main.
 if sort_criteria == "mtime" or sort_criteria == "size":
-	data_sorted = get_mtime_or_size(processed_directory,sort_criteria)
+	data_sorted = get_mtime_or_size(processed_directory,sort_criteria,result_number)
 	for data in data_sorted:
 		print data[0]
 		if sort_criteria == "mtime":
