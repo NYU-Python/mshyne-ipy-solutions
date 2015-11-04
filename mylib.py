@@ -16,11 +16,23 @@ class PersistDict(dict):
 		dict.__setitem__(self,key,value)
 		self.rewrite_dict(self.filename)
 	
+	def __delitem__(self,key):
+		dict.__delitem__(self,key)
+		self.rewrite_dict(self.filename)
+	
 	def __getitem__(self,key):
 		return dict.__getitem__(self,self.__keytransform__(key))
 	
 	def __keytransform__(self,key):
 		return key
+	
+	def clear(self):
+		dict.clear(self)
+		self.rewrite_dict(self.filename)
+	
+	def update(self, new_dict):
+		dict.update(self, new_dict)
+		self.rewrite_dict(self.filename)
 	
 	def rewrite_dict(self, dictionary_file):
 		temp_dict = open(dictionary_file, 'w')
