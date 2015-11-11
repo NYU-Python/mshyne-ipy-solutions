@@ -95,3 +95,10 @@ def test_validate_args_bad_value():
 
 def test_validate_args():
 	assert sps.validate_args('centered','15','AAPL')
+	
+#TESTS FOR PARSE_ARGS
+def test_pargse_args_bad_number():
+	assert sps.parse_args(['hee','hee'])
+
+def test_pargse_args():
+	assert sps.parse_args(['hee','hee','hee'])
