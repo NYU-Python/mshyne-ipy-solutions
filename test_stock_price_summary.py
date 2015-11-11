@@ -72,3 +72,13 @@ def test_get_average_not_number():
 
 def test_get_average():
 	assert sps.get_average([114.71, 115.0, 114.32, 113.4]) == 114.35749999999999
+	
+#TESTS FOR GET_FILENAME_FROM_TICKER
+def test_get_filename_from_ticker_argtype():
+	assert sps.get_filename_from_ticker(199)
+
+def test_get_filename_from_ticker_uppercase():
+	assert sps.get_filename_from_ticker('APPL')
+
+def test_get_filename_from_ticker_lowercase():
+	assert sps.get_filename_from_ticker('appl')
