@@ -42,7 +42,24 @@ def test_get_median_not_iterable_string():
 	assert sps.get_median([114.71, 115.0, 114.32, 113.4, 'me'])
 
 def test_get_median_even():
-	assert sps.get_median([114.71, 115.0, 114.32, 113.4])
+	assert sps.get_median([114.71, 115.0, 114.32, 113.4]) == 114.51499999999999
 
 def test_get_median_odd():
-	assert sps.get_median([114.71, 115.0, 114.32, 113.4, 113.7])
+	assert sps.get_median([114.71, 115.0, 114.32, 113.4, 113.7]) == 114.32
+	
+#TESTS FOR GET_CENTERED
+
+def test_get_centered_not_iterable():
+	assert sps.get_centered(5)
+
+def test_get_centered_not_iterable():
+	assert sps.get_centered([114.71, 115.0, 114.32, 113.4, 'me'])
+
+def test_get_centered_duplicates():
+	assert sps.get_centered([114.71, 115.0, 114.32, 113.4, 114.71]) == 114.51499999999999
+
+def test_get_centered_top_and_bottom_duplicates():
+	assert sps.get_centered([114.71, 115.0, 114.32, 113.4, 113.4, 115.0]) == 114.51499999999999
+
+def test_get_centered_regular_list():
+	assert sps.get_centered([114.71, 115.0, 114.32, 113.4, 115.21]) == 114.71
