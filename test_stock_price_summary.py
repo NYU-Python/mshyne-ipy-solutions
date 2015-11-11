@@ -82,3 +82,16 @@ def test_get_filename_from_ticker_uppercase():
 
 def test_get_filename_from_ticker_lowercase():
 	assert sps.get_filename_from_ticker('appl')
+	
+#TESTS FOR VALIDATE_ARGS
+def test_validate_args_bad_summary():
+	assert sps.validate_args('derp',15,'AAPL')
+
+def test_validate_args_bad_ticker():
+	assert sps.validate_args('centered',15,'DERP')
+
+def test_validate_args_bad_value():
+	assert sps.validate_args('centered','derp','AAPL')
+
+def test_validate_args():
+	assert sps.validate_args('centered','15','AAPL')
