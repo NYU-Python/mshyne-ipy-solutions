@@ -48,7 +48,6 @@ def test_get_median_odd():
 	assert sps.get_median([114.71, 115.0, 114.32, 113.4, 113.7]) == 114.32
 	
 #TESTS FOR GET_CENTERED
-
 def test_get_centered_not_iterable():
 	assert sps.get_centered(5)
 
@@ -63,3 +62,13 @@ def test_get_centered_top_and_bottom_duplicates():
 
 def test_get_centered_regular_list():
 	assert sps.get_centered([114.71, 115.0, 114.32, 113.4, 115.21]) == 114.71
+	
+#TESTS FOR GET_AVERAGE
+def test_get_average_not_iterable():
+	assert sps.get_average(10)
+
+def test_get_average_not_number():
+	assert sps.get_average([114.71, 115.0, 114.32, 113.4, 'me'])
+
+def test_get_average():
+	assert sps.get_average([114.71, 115.0, 114.32, 113.4]) == 114.35749999999999
