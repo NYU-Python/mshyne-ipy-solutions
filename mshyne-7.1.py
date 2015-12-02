@@ -1,34 +1,25 @@
 import os, sys, timeit
 
-def strip_punct(line):
-	punctuation = ["'", ":", ";", "?", "!", ".", ","]
-	for mark in punctuation:
-		if mark in line:
-			line = line.replace(mark, "")
-	line = (line.strip("\n")).lower()
-	return line
+fh = sys.argv[1]
 
 def forloop(fh):
 	my_list = []
 	file = open(os.path.abspath(fh))
 	for line in file.readlines():
-		lowercase_line = strip_punct(line)
+		lowercase_line = (line.rstrip('".,;:?!\n\'')).lower()
 		my_list.append(lowercase_line)
-	print my_list
 
 def listcomp(fh):
-	my_list = [strip_punct(i) for i in (open(os.path.abspath(fh))).readlines()]
-	print my_list
+	my_list = [(i.rstrip('".,;:?!\n\'')).lower() for i in (open(os.path.abspath(fh))).readlines()]
 
 def gencomp(fh):
-	generator = (strip_punct(i) for i in (open(os.path.abspath(fh))).readlines())
+	generator = ((i.rstrip('".,;:?!\n\'')).lower() for i in (open(os.path.abspath(fh))).readlines())
 	my_list = list(generator)
-	print my_list
 
 def mapping(fh):
-	my_list = map(strip_punct, (open(os.path.abspath(fh))).readlines()) 
-	print my_list
+	my_list = map(lambda x: x.rstrip('".,;:?!\n\'').lower(), (open(os.path.abspath(fh))).readlines())
 
-#mapping(sys.argv[1])
-
-timeit.timeit('forloop(sys.argv[1])', setup='from __main__ import forloop, strip_punct', number=10000)
+print timeit.timeit('forloop(fh)', setup='from __main__ import forloop, fh', number=10)
+print timeit.timeit('listcomp(fh)', setup='from __main__ import listcomp, fh', number=10)
+print timeit.timeit('gencomp(fh)', setup='from __main__ import gencomp, fh', number=10)
+print timeit.timeit('mapping(fh)', setup='from __main__ import mapping, fh', number=10)
