@@ -1,0 +1,22 @@
+<!doctype html>
+<HTML><HEAD></HEAD><BODY>
+<title>Hello from Flask</title>
+{% if users %}
+<H2>Users</H2>
+<TABLE BORDER="1" ALIGN="center" CELLPADDING="15">
+    {% for user in users %}
+       <TR>
+          <TD>{{ user[0] }}</TD><TD>{{ user[1] }}</TD><TD>{{ user[2] }}</TD><TD><A HREF="{{ user[3] }}">delete</A></TD>
+       </TR>
+    {% endfor %}
+{% else %}
+      <TR>
+         <TD colspan="4">No users found.</TD>
+      </TR>
+{% endif %}
+    <TR><TD colspan="4" align="right"><A HREF="{{ input_link }}">input new record</A></TD></TR>
+    <TR><TD colspan="4" align="right"><A HREF="{{ logout_link }}">logout</A></TD></TR>
+</TABLE>
+<BR>
+</BODY></HTML>
+
